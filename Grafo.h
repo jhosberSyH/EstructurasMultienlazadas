@@ -56,8 +56,10 @@ class Grafo{
         list<elemento> caminoMasCaro();
         void hamitoniano(int v,int vf,float &costo,float peso,list<int> &result,list<int> camino,vector<bool> &visitados);
         list<elemento> hamitoniano(int vf);
-
-        
+        void dijkstra(int inicio,int fin,list<int> &camino,float &pesoFinal);
+        list<elemento> dijkstra(elemento inicio,elemento fin);
+        void obstaculos(int inicio,int fin,list<int> &camino,float &pesoFinal,vector<bool> restrincion);
+        list<elemento> caminoObstaculos(elemento inicio,elemento fin,list<elemento> obstaculos);
 
 };
 

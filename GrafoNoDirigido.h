@@ -15,6 +15,8 @@ class GrafoNoDirigido : public Grafo<elemento>{
         float arbolExpandidoMinimoPeso();
         void arbolExpandidoMinimoCamino(list<int> &camino);
         list<elemento> arbolExpandidoMinimoCamino();
+        bool esMulticoloreable(int nColores);
+        void esMulticoloreable(int inicio, int nColoresGrafo,bool &resultado);
 };
 
 #endif 

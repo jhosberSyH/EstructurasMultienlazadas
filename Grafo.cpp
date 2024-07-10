@@ -646,3 +646,145 @@ template <class elemento>
 
         return (result);
     }
+
+
+
+template <class elemento>
+    void Grafo<elemento>::dijkstra(int inicio,int fin,list<int> &camino,float &pesoFinal) {
+        list<int> sucesores;
+        queue<int> cola;
+        vector<int> anteriores;
+        vector<float> distancia;
+        int v,w;
+        float peso;
+        for(int i = 0; i < this->getVertices();i++){
+            distancia.push_back(9999999);
+            anteriores.push_back(-1);
+        }
+        cola.push(inicio);
+        distancia[inicio] = 0;
+        while (!cola.empty()) {
+            v = cola.front();
+            sucesores = this->sucesores(v);
+            while(!sucesores.empty()){
+                w = sucesores.front();
+                peso = this->getPesoArco(v,w);
+                if (distancia[v] + peso < distancia[w]) {
+                    distancia[w] = distancia[v] + peso;
+                    anteriores[w] = v;
+                    cola.push(w);
+                }
+                sucesores.pop_front();
+            }
+            cola.pop();
+        }
+        pesoFinal = distancia[fin];
+        if( anteriores[fin] != -1){
+            camino.push_back(fin);
+            v = fin;
+            while((v != inicio) && (v != -1)){
+                v = anteriores[v];
+                camino.push_front(v);
+            }
+        }
+    }
+template <class elemento>
+    list<elemento> Grafo<elemento>::dijkstra(elemento inicio,elemento fin){
+        int v = 0,w = 0;
+        Grafo<int> g;
+        list<int> camino;
+        list<elemento> result;
+        vector<elemento> datos;
+        float peso = 0;
+
+        this->mapear(g,datos);
+
+        auto it = find(datos.begin(),datos.end(),inicio);
+        v = distance(datos.begin(),it);
+        it = find(datos.begin(),datos.end(),fin);
+        w = distance(datos.begin(),it);
+        
+        g.dijkstra(v,w,camino,peso);
+
+        result = this->desmapear(camino,datos);
+        cout<<peso<<endl;
+        return (result);
+    }
+
+
+
+
+
+template <class elemento>
+    void Grafo<elemento>::obstaculos(int inicio,int fin,list<int> &camino,float &pesoFinal,vector<bool> restrincion) {
+        list<int> sucesores;
+        queue<int> cola;
+        vector<int> anteriores;
+        vector<float> distancia;
+        int v,w;
+        float peso;
+        for(int i = 0; i < this->getVertices();i++){
+            distancia.push_back(9999999);
+            anteriores.push_back(-1);
+        }
+        cola.push(inicio);
+        distancia[inicio] = 0;
+        while (!cola.empty()) {
+            v = cola.front();
+            sucesores = this->sucesores(v);
+            while(!sucesores.empty()){
+                w = sucesores.front();
+                if(!restrincion[w]){
+                    peso = this->getPesoArco(v,w);
+                    if (distancia[v] + peso < distancia[w]) {
+                        distancia[w] = distancia[v] + peso;
+                        anteriores[w] = v;
+                        cola.push(w);
+                    }
+                }
+                sucesores.pop_front();
+            }
+            cola.pop();
+        }
+        pesoFinal = distancia[fin];
+        if( anteriores[fin] != -1){
+            camino.push_back(fin);
+            v = fin;
+            while((v != inicio) && (v != -1)){
+                v = anteriores[v];
+                camino.push_front(v);
+            }
+        }
+    }
+template <class elemento>
+    list<elemento> Grafo<elemento>::caminoObstaculos(elemento inicio,elemento fin,list<elemento> obstaculos){
+        int v = 0,w = 0;
+        Grafo<int> g;
+        vector<bool> restrinciones;
+        list<int> camino;
+        list<elemento> result;
+        vector<elemento> datos;
+        float peso = 0;
+        for(int i = 0;i < this->getVertices(); i++){
+            restrinciones.push_back(false);
+        }
+
+        this->mapear(g,datos);
+        
+        auto it = find(datos.begin(),datos.end(),inicio);
+        v = distance(datos.begin(),it);
+        it = find(datos.begin(),datos.end(),fin);
+        w = distance(datos.begin(),it);
+
+        while(!obstaculos.empty()){
+            it = find(datos.begin(),datos.end(),obstaculos.front());
+            restrinciones[distance(datos.begin(),it)] = true;
+            obstaculos.pop_front();
+        }
+        
+        g.dijkstra(v,w,camino,peso);
+
+        result = this->desmapear(camino,datos);
+        cout<<peso<<endl;
+        return (result);
+    }

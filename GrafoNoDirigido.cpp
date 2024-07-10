@@ -284,3 +284,67 @@ template <class elemento>
 
 
 
+template<typename elemento>
+bool GrafoNoDirigido<elemento>::esMulticoloreable(int nColores){
+  vector<elemento> datos;
+  bool multicoloreable = true;
+  GrafoNoDirigido<int> g;
+  int inicio = 0;
+  this->mapear(g,datos);
+  g.esMulticoloreable(inicio,nColores,multicoloreable);
+  return multicoloreable;
+}
+
+template<typename elemento>
+void GrafoNoDirigido<elemento>::esMulticoloreable(int inicio, int nColoresGrafo, bool &resultado){
+  vector<int> colores;
+  vector<bool> coloresDisponibles, visitados;
+  colores.resize(this->getVertices(),-1);
+  coloresDisponibles.resize(this->getVertices(),true);
+  visitados.resize(this->getVertices(),false);
+  queue<int> c;
+  list<int> sucesores;
+  int v,w,i;
+  bool encontrado = false;
+  resultado = true;
+  colores[inicio] = 0;
+  c.push(inicio);
+  while(!c.empty() && resultado){
+    v = c.front();
+    c.pop();
+
+    sucesores = this->sucesores(v);
+    while (!sucesores.empty() && resultado)
+    {
+      w = sucesores.front();
+      visitados[w] = true;
+      if(colores[w] != -1){
+        coloresDisponibles[colores[w]] = false;
+      }
+      if(!visitados[v]){
+        c.push(w);
+      }   
+      sucesores.pop_front();
+    }
+    i = 0;
+    encontrado = false;
+    while (i < nColoresGrafo && !encontrado){
+      if(coloresDisponibles[i]){
+        colores[w] = i;
+        encontrado = true;
+      }
+      ++i;
+    }
+    visitados[v] = true;
+    if(!encontrado){
+      resultado = false;
+      return;
+    }
+  }
+  return;
+}
+
+
+
+
+

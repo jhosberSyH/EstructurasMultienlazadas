@@ -1,4 +1,4 @@
-TARGET = RUN
+TARGET = grafos
 LIBS = -lm
 CC = g++
 CFLAGS = -g

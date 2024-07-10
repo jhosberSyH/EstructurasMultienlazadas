@@ -1,16 +1,6 @@
 2
 Valencia Washington 10
-Caracas Dallas 3.6
 Washington Caracas 45
-Caracas Washington 45
-Dallas Valencia 2
-Dallas Washington 7
-Guinea Frankfurt 77.1
-Oregon Valencia 56
-Dallas Oregon 100
-Dallas Frankfurt 45
-Dallas Guinea 54
-Oregon Frankfurt 41
-Oregon Caracas 1
-Valencia Dallas 2
-Dallas Frankfurt 45
+Valencia Caracas 455
+
+

@@ -6,10 +6,10 @@ int main(){
     GrafoNoDirigido<int> g2;
     string nombre1,nombre2;
     list<int> camino;
-    list<string> camino2;
+    list<string> camino2,retrinciones;
     vector<string> ciudades;
     bool band = false;
-    int k;
+    int k,n;
     float peso;
     cin>>k;
     while(!cin.eof()){
@@ -42,5 +42,34 @@ int main(){
         camino2.pop_front();
     }
     cout<<endl;
+    cout<<endl;
+    cout<<endl;
+    cout<<endl;
+    cout<<"Dijkstra:"<<endl;
+    //camino2 = g.dijkstra("Washington","Frankfurt");
+    cout<<"camino dijkstra: ";
+    while(!camino2.empty()){
+        cout<<camino2.front()<<" ";
+        camino2.pop_front();
+    }
+    cout<<endl;
+    cout<<endl;
+    cout<<endl;
+    cout<<endl;
+    cout<<"camino con obstaculos"<<endl;
+    retrinciones.push_back("Washington");
+    retrinciones.push_back("Dallas");
+    //camino2 = g.caminoObstaculos("Caracas","Oregon",retrinciones);
+    while(!camino2.empty()){
+        cout<<camino2.front()<<" ";
+        camino2.pop_front();
+    }
+    cout<<endl;
+    n = 2; //cantidad de colores;
+    if (g.esMulticoloreable(n) ){
+        cout<<"si se puede colorear con "<<n<<" colores el grafo"<<endl;
+    }else{
+        cout<<"no se puede colorear con "<<n<<" colores el grafo"<<endl;
+    }
     return 0;
 }
